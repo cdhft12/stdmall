@@ -26,6 +26,9 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 application.properties
+log4jdbc.log4j2.properties
+logback-spring.xml
+application.yml
 
 ### NetBeans ###
 /nbproject/private/

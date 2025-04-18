@@ -1,5 +1,6 @@
-package com.std.stdmall.domain;
+package com.std.stdmall.board.domain;
 
+import com.std.stdmall.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-public class Board extends BaseTimeEntity{
+public class Board extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
