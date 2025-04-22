@@ -14,10 +14,4 @@ import java.time.LocalDate;
 @Builder
 public class MemberSignUpResDTO {
     private Long memberNum;
-    private String loginId;
-    private String password;
-    private String name;
-    private Gender gender;
-    private LocalDate birthday;
-    private Boolean deleteYn;
 }

@@ -6,6 +6,7 @@ import com.std.stdmall.member.domain.Member;
 import com.std.stdmall.member.dto.MemberSignUpReqDTO;
 import com.std.stdmall.member.dto.MemberSignUpResDTO;
 import com.std.stdmall.member.repository.MemberRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ import static com.std.stdmall.common.ErrorCode.BAD_REQUEST;
 public class MemberServiceImpl implements MemberService{
 
     private final MemberRepository memberRepository;
-
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     @Override
     @Transactional(readOnly = true)
     public List<Member> memberList() {
@@ -34,16 +35,10 @@ public class MemberServiceImpl implements MemberService{
         if(checkIsEmpty(reqDTO)){
             throw new BaseException(BAD_REQUEST);
         }
-
+        reqDTO.setPassword(bCryptPasswordEncoder.encode(reqDTO.getPassword()));
         Member member = memberRepository.save(reqDTO.toEntity());
         MemberSignUpResDTO memberSignUpResDTO = MemberSignUpResDTO.builder()
                 .memberNum(member.getMemberNum())
-                .loginId(member.getLoginId())
-                .password(member.getPassword())
-                .name(member.getName())
-                .gender(member.getGender())
-                .birthday(member.getBirthday())
-                .deleteYn(member.getDeleteYn())
                 .build();
         return memberSignUpResDTO;
     }

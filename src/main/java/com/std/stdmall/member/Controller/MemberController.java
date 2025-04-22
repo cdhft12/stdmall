@@ -22,7 +22,6 @@ public class MemberController {
     @PostMapping("/signUp")
     public ResponseEntity signUp(@Validated @RequestBody MemberSignUpReqDTO reqDTO) {
         MemberSignUpResDTO memberSignUpRes = memberService.signUpMember(reqDTO);
-
         return ResponseEntity.ok(new BaseResponse<>(memberSignUpRes));
     }
 }
