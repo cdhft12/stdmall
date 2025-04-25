@@ -1,6 +1,7 @@
 package com.std.stdmall.member;
 
 import com.std.stdmall.common.Gender;
+import com.std.stdmall.common.MemberRole;
 import com.std.stdmall.member.domain.Member;
 import com.std.stdmall.member.repository.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -42,6 +43,7 @@ public class MemberTest {
                 .gender(Gender.M)
                 .birthday(LocalDate.of(1994, 3, 17))
                 .deleteYn(false)
+                .role(MemberRole.USER)
                 .build());
         //when
         List<Member> memberList = memberRepository.findAll();

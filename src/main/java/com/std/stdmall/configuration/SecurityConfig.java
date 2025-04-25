@@ -17,7 +17,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-        private final AuthenticationConfiguration authenticationConfiguration;
+    private final AuthenticationConfiguration authenticationConfiguration;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -29,7 +30,7 @@ public class SecurityConfig {
             .httpBasic((auth) -> auth.disable());
         http
             .authorizeHttpRequests((auth) -> auth
-                    .requestMatchers("/member", "/", "/signIn").permitAll()
+                    .requestMatchers("/signIn", "/", "/member").permitAll()
                     .anyRequest().authenticated());
         http
             .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration)), UsernamePasswordAuthenticationFilter.class);
@@ -48,4 +49,5 @@ public class SecurityConfig {
 
         return configuration.getAuthenticationManager();
     }
+
 }

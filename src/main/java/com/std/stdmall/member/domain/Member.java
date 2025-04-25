@@ -2,6 +2,7 @@ package com.std.stdmall.member.domain;
 
 import com.std.stdmall.common.BaseTimeEntity;
 import com.std.stdmall.common.Gender;
+import com.std.stdmall.common.MemberRole;
 import jakarta.persistence.Entity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -32,14 +33,18 @@ public class Member extends BaseTimeEntity {
     private LocalDate birthday;  // 생년월일
     @Column(name = "delete_yn")
     private Boolean deleteYn;    // 삭제 여부
+    @Column(name = "role")
+    private MemberRole role;
 
     @Builder
-    public Member(String loginId, String password, String name, Gender gender, LocalDate birthday, Boolean deleteYn) {
+    public Member(Long memberNum, String loginId, String password, String name, Gender gender, LocalDate birthday, Boolean deleteYn, MemberRole role) {
+        this.memberNum = memberNum;
         this.loginId = loginId;
         this.password = password;
         this.name = name;
         this.gender = gender;
         this.birthday = birthday;
         this.deleteYn = deleteYn;
+        this.role = role;
     }
 }

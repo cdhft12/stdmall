@@ -1,5 +1,5 @@
 package com.std.stdmall.common;
 
-public enum Role {
+public enum MemberRole {
     USER,ADMIN
 }

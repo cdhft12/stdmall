@@ -24,4 +24,5 @@ public class MemberController {
         MemberSignUpResDTO memberSignUpRes = memberService.signUpMember(reqDTO);
         return ResponseEntity.ok(new BaseResponse<>(memberSignUpRes));
     }
+
 }
