@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
     MemberSignInResDTO findByLoginId(String loginId);
+    boolean existsByLoginId(String loginId);
 }
