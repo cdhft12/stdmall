@@ -2,7 +2,7 @@ package com.std.stdmall.common.exception;
 
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.validation.FieldError;
+import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,7 +15,7 @@ public class ErrorResponse {
     private final LocalDateTime timestamp;
     private final String path;
     private final List<FieldError> errors;
-
+    private HttpStatus httpStatus;
     @Getter
     @Builder
     public static class FieldError {

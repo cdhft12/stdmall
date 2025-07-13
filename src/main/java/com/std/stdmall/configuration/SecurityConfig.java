@@ -30,7 +30,7 @@ public class SecurityConfig {
             .httpBasic((auth) -> auth.disable());
         http
             .authorizeHttpRequests((auth) -> auth
-                    .requestMatchers("/signIn", "/", "/member").permitAll()
+                    .requestMatchers("/signIn", "/", "/member/**").permitAll()
                     .anyRequest().authenticated());
         http
             .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration)), UsernamePasswordAuthenticationFilter.class);

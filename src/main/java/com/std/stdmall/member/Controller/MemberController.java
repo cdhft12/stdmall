@@ -20,8 +20,9 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/signUp")
-    public ResponseEntity signUp(@Validated @RequestBody MemberSignUpReqDTO reqDTO) {
+    public ResponseEntity signUp(@Validated MemberSignUpReqDTO reqDTO) {
         MemberSignUpResDTO memberSignUpRes = memberService.signUpMember(reqDTO);
+        System.out.println("test");
         return new ResponseEntity<>("사용자 생성 성공: " + reqDTO.getLoginId(), HttpStatus.CREATED);
     }
 
