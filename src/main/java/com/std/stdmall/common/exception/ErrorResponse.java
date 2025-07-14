@@ -12,10 +12,10 @@ import java.util.List;
 public class ErrorResponse {
     private final String errorCode;
     private final String message;
+    private HttpStatus httpStatus;
     private final LocalDateTime timestamp;
     private final String path;
     private final List<FieldError> errors;
-    private HttpStatus httpStatus;
     @Getter
     @Builder
     public static class FieldError {
