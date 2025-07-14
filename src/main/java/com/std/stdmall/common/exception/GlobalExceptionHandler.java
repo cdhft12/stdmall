@@ -2,8 +2,6 @@ package com.std.stdmall.common.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -15,21 +13,19 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static org.hibernate.query.sqm.tree.SqmNode.log;
-
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     // CustomException 처리
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<ErrorResponse> handleCustomException(CustomException ex, WebRequest request) {
         ErrorResponse errorResponse = ErrorResponse.builder()
-                .errorCode(ex.getErrorCode().getCode())
+                .errorCode(ex.getResultCode().getCode())
                 .message(ex.getMessage())
                 .timestamp(LocalDateTime.now())
                 .path(((ServletWebRequest)request).getRequest().getRequestURI())
-                .httpStatus(ex.getErrorCode().getHttpStatus())
+                .httpStatus(ex.getResultCode().getHttpStatus())
                 .build();
-        return new ResponseEntity<>(errorResponse, ex.getErrorCode().getHttpStatus());
+        return new ResponseEntity<>(errorResponse, ex.getResultCode().getHttpStatus());
     }
     /*WebRequest
     * 사용 이유 = 환경 독립성, 공통화된 접근을 위해서
@@ -46,12 +42,12 @@ public class GlobalExceptionHandler {
                 .collect(Collectors.toList());
 
         ErrorResponse errorResponse = ErrorResponse.builder()
-                .errorCode(ErrorCode.INVALID_INPUT_VALUE.getCode()) // Enum 활용
-                .message(ErrorCode.INVALID_INPUT_VALUE.getMessage())
+                .errorCode(ResultCode.INVALID_INPUT_VALUE.getCode()) // Enum 활용
+                .message(ResultCode.INVALID_INPUT_VALUE.getMessage())
                 .timestamp(LocalDateTime.now())
                 .path(((ServletWebRequest)request).getRequest().getRequestURI())
                 .errors(fieldErrors) // 필드별 에러 목록 추가
-                .httpStatus(ErrorCode.INVALID_INPUT_VALUE.getHttpStatus())
+                .httpStatus(ResultCode.INVALID_INPUT_VALUE.getHttpStatus())
                 .build();
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }

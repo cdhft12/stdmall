@@ -2,7 +2,7 @@ package com.std.stdmall.member.service;
 
 import com.std.stdmall.common.MemberRole;
 import com.std.stdmall.common.exception.CustomException;
-import com.std.stdmall.common.exception.ErrorCode;
+import com.std.stdmall.common.exception.ResultCode;
 import com.std.stdmall.member.domain.Member;
 import com.std.stdmall.member.dto.MemberSignUpReqDTO;
 import com.std.stdmall.member.dto.MemberSignUpResDTO;
@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -33,7 +32,7 @@ public class MemberServiceImpl implements MemberService{
         // 2. 비즈니스 로직 검증 (예: 사용자 이름 중복 확인)
         if (memberRepository.existsByLoginId(reqDTO.getLoginId())) {
             //log.warn("이미 존재하는 사용자 이름입니다: {}", request.getUsername());
-            throw new CustomException(ErrorCode.DUPLICATE_USERNAME);
+            throw new CustomException(ResultCode.DUPLICATE_USERNAME);
         }
         reqDTO.setPassword(bCryptPasswordEncoder.encode(reqDTO.getPassword()));
         reqDTO.setRole(MemberRole.USER);

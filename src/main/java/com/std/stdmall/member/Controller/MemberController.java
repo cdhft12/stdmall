@@ -1,5 +1,7 @@
 package com.std.stdmall.member.Controller;
 
+import com.std.stdmall.common.exception.ApiResponse;
+import com.std.stdmall.common.exception.ResultCode;
 import com.std.stdmall.member.dto.MemberSignUpReqDTO;
 import com.std.stdmall.member.dto.MemberSignUpResDTO;
 import com.std.stdmall.member.service.MemberService;
@@ -22,8 +24,7 @@ public class MemberController {
     @PostMapping("/signUp")
     public ResponseEntity signUp(@Validated MemberSignUpReqDTO reqDTO) {
         MemberSignUpResDTO memberSignUpRes = memberService.signUpMember(reqDTO);
-        System.out.println("test");
-        return new ResponseEntity<>("사용자 생성 성공: " + reqDTO.getLoginId(), HttpStatus.CREATED);
+        ApiResponse<MemberSignUpResDTO> apiResponse = ApiResponse.success(ResultCode.CREATED, memberSignUpRes);
+        return new ResponseEntity<>(apiResponse, ResultCode.CREATED.getHttpStatus());
     }
-
 }
