@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,10 +29,24 @@ public class GlobalExceptionHandler {
                 .build();
         return new ResponseEntity<>(errorResponse, ex.getResultCode().getHttpStatus());
     }
+    //잘못된 url 요청 처리
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFoundException(NoResourceFoundException ex, WebRequest request) {
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .errorCode(ResultCode.NOT_FOUND.getCode()) // Enum 활용
+                .message(ResultCode.NOT_FOUND.getMessage())
+                .timestamp(LocalDateTime.now())
+                .path(((ServletWebRequest)request).getRequest().getRequestURI())
+                .httpStatus(ResultCode.INVALID_INPUT_VALUE.getHttpStatus())
+                .build();
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+    //NoHandlerFoundException 예외 처리도 해야한다. -> 별도의 처리가 필요한듯
     /*WebRequest
     * 사용 이유 = 환경 독립성, 공통화된 접근을 위해서
     * */
     // @Valid 또는 @Validated 유효성 검사 실패 시 발생하는 MethodArgumentNotValidException 처리
+    //유효성 검사 실패 예외 처리
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex, WebRequest request) {
         List<ErrorResponse.FieldError> fieldErrors = ex.getBindingResult().getFieldErrors().stream()
@@ -59,6 +75,7 @@ public class GlobalExceptionHandler {
                 .message("서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.") // 사용자에게 일반적인 메시지 제공
                 .timestamp(LocalDateTime.now())
                 .path(((ServletWebRequest)request).getRequest().getRequestURI())
+                .httpStatus(ResultCode.INTERNAL_SERVER_ERROR.getHttpStatus())
                 .build();
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
