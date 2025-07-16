@@ -15,6 +15,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/*
+* 전체적인 예외처리 구조 중복되는 값이나 설정이 많고 필요없는 로직이 있음 추후 다시 수정할 것.
+* 다른 기능 선개발 후 처리
+* */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     // CustomException 처리

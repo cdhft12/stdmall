@@ -19,10 +19,11 @@ public class MemberSignUpReqDTO {
     @Size(min = 5, max = 20, message = "사용자 이름은 5자 이상 20자 이하로 입력해주세요.")
     private String loginId;
     @NotBlank(message = "패스워드는 필수 입력 항목입니다.")
+    @Size(min = 6, message = "비밀번호는 6자 이상이어야 합니다.")
     private String password;
     private String name;
     private Gender gender;
-    private LocalDate birthday;
+    private LocalDate birth;
     private MemberRole role;
 
     public Member toEntity() {
@@ -31,7 +32,7 @@ public class MemberSignUpReqDTO {
                 .password(password)
                 .name(name)
                 .gender(gender)
-                .birthday(birthday)
+                .birth(birth)
                 .deleteYn(false)
                 .role(role)
                 .build();
