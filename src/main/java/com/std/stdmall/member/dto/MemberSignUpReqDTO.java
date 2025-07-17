@@ -3,6 +3,8 @@ package com.std.stdmall.member.dto;
 import com.std.stdmall.common.Gender;
 import com.std.stdmall.common.MemberRole;
 import com.std.stdmall.member.domain.Member;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -24,6 +26,7 @@ public class MemberSignUpReqDTO {
     private String name;
     private Gender gender;
     private LocalDate birth;
+    @Enumerated(EnumType.STRING)
     private MemberRole role;
 
     public Member toEntity() {

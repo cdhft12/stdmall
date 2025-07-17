@@ -2,6 +2,7 @@ package com.std.stdmall.common.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -67,6 +68,18 @@ public class GlobalExceptionHandler {
                 .timestamp(LocalDateTime.now())
                 .path(((ServletWebRequest)request).getRequest().getRequestURI())
                 .errors(fieldErrors) // 필드별 에러 목록 추가
+                .httpStatus(ResultCode.INVALID_INPUT_VALUE.getHttpStatus())
+                .build();
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+    //회원 인증 예외
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException ex, WebRequest request) {
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .errorCode(ResultCode.INVALID_INPUT_VALUE.getCode()) // Enum 활용
+                .message(ResultCode.INVALID_INPUT_VALUE.getMessage())
+                .timestamp(LocalDateTime.now())
+                .path(((ServletWebRequest)request).getRequest().getRequestURI())
                 .httpStatus(ResultCode.INVALID_INPUT_VALUE.getHttpStatus())
                 .build();
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);

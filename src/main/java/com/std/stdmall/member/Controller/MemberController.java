@@ -36,19 +36,9 @@ public class MemberController {
     }
     @PostMapping("/login")
     public ResponseEntity<MemberSignInResDTO> login(@Validated MemberSignInReqDTO memberSignInReqDTO) {
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(memberSignInReqDTO.getLoginId(), memberSignInReqDTO.getPassword())
-            );
-            // 인증 성공 후, MemberService에게 JWT 토큰 생성을 위임
-            String jwtToken = memberService.generateTokenAfterAuthentication(authentication);
-            return ResponseEntity.ok(MemberSignInResDTO.builder().token(jwtToken).build());
-        } catch (AuthenticationException e) { // Spring Security 인증 관련 예외를 명확히 처리
-            // BadCredentialsException, UsernameNotFoundException 등 포함
-            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
-        } catch (Exception e) {
-            // 기타 예상치 못한 예외
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(memberSignInReqDTO.getLoginId(), memberSignInReqDTO.getPassword()));
+        String jwtToken = memberService.generateTokenAfterAuthentication(authentication);
+        return ResponseEntity.ok(MemberSignInResDTO.builder().token(jwtToken).build());
     }
 }

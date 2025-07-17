@@ -41,7 +41,7 @@ public class MemberTest {
                 .password("1234")
                 .name("tester2")
                 .gender(Gender.M)
-                .birthday(LocalDate.of(1994, 3, 17))
+                .birth(LocalDate.of(1994, 3, 17))
                 .deleteYn(false)
                 .role(MemberRole.USER)
                 .build());

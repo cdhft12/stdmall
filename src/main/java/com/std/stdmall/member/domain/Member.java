@@ -35,6 +35,7 @@ public class Member extends BaseTimeEntity implements UserDetails {
     @Column(name = "delete_yn")
     private Boolean deleteYn;    // 삭제 여부
     @Column(name = "role")
+    @Enumerated(EnumType.STRING)
     private MemberRole role;
 
     @Builder

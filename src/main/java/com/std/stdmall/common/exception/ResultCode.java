@@ -17,6 +17,7 @@ public enum ResultCode {
     HANDLE_ACCESS_DENIED(HttpStatus.FORBIDDEN, "E003", "접근 권한이 없습니다."),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "E004", "서버 오류가 발생했습니다."),
     NOT_FOUND(HttpStatus.NOT_FOUND, "E005", "유효하지 않은 URL 요청입니다."),
+    UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "E006", "인증 실패: 잘못된 사용자 이름 또는 비밀번호입니다."),
     // Member (사용자 관련 에러) - U로 시작하는 코드
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "M001", "해당 사용자를 찾을 수 없습니다."),
     DUPLICATE_USERNAME(HttpStatus.CONFLICT, "M002", "이미 존재하는 사용자 이름입니다."),
