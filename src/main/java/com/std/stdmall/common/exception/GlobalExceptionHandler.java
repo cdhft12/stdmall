@@ -8,9 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -19,6 +17,7 @@ import java.util.stream.Collectors;
 /*
 * 전체적인 예외처리 구조 중복되는 값이나 설정이 많고 필요없는 로직이 있음 추후 다시 수정할 것.
 * 다른 기능 선개발 후 처리
+*  주로 스프링 MVC 계층에서 발생하는 예외를 처리합니다. 이는 요청이 스프링 시큐리티 필터 체인을 성공적으로 통과하여 DispatcherServlet에 도달한 후, 컨트롤러나 서비스 메서드에서 예외가 발생했을 때 동작합니다.
 * */
 @RestControllerAdvice
 public class GlobalExceptionHandler {

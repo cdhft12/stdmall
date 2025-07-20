@@ -8,16 +8,12 @@ import com.std.stdmall.member.dto.MemberSignUpReqDTO;
 import com.std.stdmall.member.dto.MemberSignUpResDTO;
 import com.std.stdmall.web.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
 @RestController
@@ -40,5 +36,12 @@ public class MemberController {
                 new UsernamePasswordAuthenticationToken(memberSignInReqDTO.getLoginId(), memberSignInReqDTO.getPassword()));
         String jwtToken = memberService.generateTokenAfterAuthentication(authentication);
         return ResponseEntity.ok(MemberSignInResDTO.builder().token(jwtToken).build());
+    }
+
+    @GetMapping("/profile")
+    public String getUserProfile() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName(); // 사용자 이름
+        return "Hello, " + username + "! This is your profile.";
     }
 }
